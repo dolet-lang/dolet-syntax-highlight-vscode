@@ -1,0 +1,26 @@
+{
+  "name": "dolet-syntax",
+  "displayName": "Dolet Syntax Highlighting",
+  "description": "Syntax highlighting for the Dolet language",
+  "version": "0.1.0",
+  "publisher": "you",
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "dolet",
+        "aliases": ["Dolet", "dolet"],
+        "extensions": [".dlt", ".dolet"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dolet",
+        "scopeName": "source.dolet",
+        "path": "./syntaxes/dolet.tmLanguage.json"
+      }
+    ]
+  }
+}

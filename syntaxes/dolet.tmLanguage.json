@@ -1,0 +1,182 @@
+{
+  "scopeName": "source.dolet",
+  "name": "Dolet",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#rawInterpolatedStrings" },
+    { "include": "#chars" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#decls" },
+    { "include": "#builtins" },
+    { "include": "#operators" },
+    { "include": "#mapKeys" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.dolet",
+          "match": "(#).*$"
+        },
+        {
+          "name": "comment.block.triple-quote.dolet",
+          "begin": "\"\"\"",
+          "beginCaptures": { "0": { "name": "punctuation.definition.comment.begin.dolet" } },
+          "end": "\"\"\"",
+          "endCaptures":   { "0": { "name": "punctuation.definition.comment.end.dolet" } },
+          "patterns": [ { "match": ".", "name": "comment.block.dolet" } ]
+        }
+      ]
+    },
+
+    "rawInterpolatedStrings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.interpolated.dolet",
+          "begin": "@\"",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.dolet" } },
+          "end": "\"",
+          "endCaptures": { "0": { "name": "punctuation.definition.string.end.dolet" } },
+          "patterns": [
+            {
+              "name": "constant.other.placeholder.interpolation.dolet",
+              "match": "\\{[^\\}]*\\}"
+            }
+          ]
+        }
+      ]
+    },
+
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.dolet",
+          "begin": "\"",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.dolet" } },
+          "end": "\"",
+          "endCaptures": { "0": { "name": "punctuation.definition.string.end.dolet" } },
+          "patterns": [
+            { "name": "constant.character.escape.dolet", "match": "\\\\[\"'\\\\nrt]" }
+          ]
+        }
+      ]
+    },
+
+    "chars": {
+      "patterns": [
+        {
+          "name": "constant.character.dolet",
+          "match": "'(?:\\\\.|[^'\\\\])'"
+        }
+      ]
+    },
+
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.float.dolet", "match": "\\b\\d+\\.\\d+(?:[eE][+-]?\\d+)?\\b" },
+        { "name": "constant.numeric.integer.dolet", "match": "\\b0x[0-9A-Fa-f]+\\b|\\b\\d+\\b" }
+      ]
+    },
+
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.dolet",
+          "match": "\\b(?:if|else|for|foreach|match|case|where|return|async|await|then|in|as|try|catch|import|export|extern|lib|self|and|or|not|is|super|extends)\\b"
+        },
+        {
+          "name": "storage.modifier.dolet",
+          "match": "\\b(?:public|private|mut|const|intern|protect|protected)\\b"
+        },
+        {
+          "name": "keyword.declaration.dolet",
+          "match": "\\b(?:class|struct|enum|implement|impl|imple|module|fun|list|array|dict|map|type|trait|use)\\b"
+        },
+        {
+          "name": "constant.language.boolean.dolet",
+          "match": "\\b(?:true|false|null|void)\\b"
+        }
+      ]
+    },
+
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.primitive.dolet",
+          "match": "\\b(?:i8|i16|i32|i64|i128|u8|u16|u32|u64|u128|f32|f64|str|char|bool)\\b"
+        },
+        {
+          "name": "entity.name.type.generic.dolet",
+          "match": "\\b[A-Z][A-Za-z0-9_]*\\b"
+        }
+      ]
+    },
+
+    "decls": {
+      "patterns": [
+        {
+          "name": "meta.function.dolet",
+          "begin": "\\b(async\\s+)?fun\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*\\(",
+          "beginCaptures": {
+            "1": { "name": "storage.modifier.dolet" },
+            "2": { "name": "entity.name.function.dolet" }
+          },
+          "end": ":",
+          "endCaptures": { "0": { "name": "punctuation.section.block.begin.dolet" } },
+          "patterns": [
+            { "include": "#types" },
+            { "include": "#keywords" }
+          ]
+        },
+        {
+          "name": "meta.class.dolet",
+          "begin": "\\bclass\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+          "beginCaptures": { "1": { "name": "entity.name.type.class.dolet" } },
+          "end": ":",
+          "endCaptures": { "0": { "name": "punctuation.section.block.begin.dolet" } }
+        },
+        {
+          "name": "meta.struct.dolet",
+          "begin": "\\bstruct\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "beginCaptures": { "1": { "name": "entity.name.type.struct.dolet" } },
+          "end": "(?=\\n)|$"
+        },
+        {
+          "name": "meta.enum.dolet",
+          "begin": "\\benum\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "beginCaptures": { "1": { "name": "entity.name.type.enum.dolet" } },
+          "end": "(?=\\n)|$"
+        }
+      ]
+    },
+
+    "builtins": {
+      "patterns": [
+        { "name": "support.function.builtin.dolet", "match": "\\b(?:print|range|max|sum|mul|date|sqrt|await|fetch)\\b" },
+        { "name": "variable.language.placeholder.dolet", "match": "@json\\b|@inline\\b|@memoize\\b|@tailrec\\b|@consteval\\b" }
+      ]
+    },
+
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.logical.dolet", "match": "&&|\\|\\||!|\\?" },
+        { "name": "keyword.operator.comparison.dolet", "match": "==|!=|<=|>=|<|>" },
+        { "name": "keyword.operator.assignment.dolet", "match": "=" },
+        { "name": "keyword.operator.other.dolet", "match": "\\+|\\-|\\*|\\/|%|\\.|:|,|@|\\|>"} 
+      ]
+    },
+
+    "mapKeys": {
+      "patterns": [
+        {
+          "name": "string.key.dolet",
+          "match": "(?<=\\{|\\[)\\s*\"[^\"]+\"(?=\\s*:)"
+        }
+      ]
+    }
+  },
+  "uuid": "d0let-0001-0002-0003-000000000001"
+}
